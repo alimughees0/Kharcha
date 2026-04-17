@@ -1,0 +1,141 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-04-17",
+  "categories": [
+    {
+      "id": "kitchen",
+      "label_en": "Kitchen",
+      "label_ur": "باورچی خانہ",
+      "items": [
+        { "id": "k001", "label_en": "Eggs", "label_ur": "انڈے", "unit": "pcs", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k002", "label_en": "Flour", "label_ur": "آٹا", "unit": "kg", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k003", "label_en": "Sugar", "label_ur": "چینی", "unit": "kg", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k004", "label_en": "Cooking Oil", "label_ur": "کا تیل", "unit": "ltr", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k005", "label_en": "Tea", "label_ur": "چائے", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k006", "label_en": "Rice", "label_ur": "چاول", "unit": "kg", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k007", "label_en": "Basin (Gram Flour)", "label_ur": "بیسن", "unit": "kg", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k008", "label_en": "Semolina", "label_ur": "سویج", "unit": "kg", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k009", "label_en": "Butter", "label_ur": "مکھن", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k010", "label_en": "Cheese", "label_ur": "پنیری", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k011", "label_en": "Corn Flour", "label_ur": "کارن فلور", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k012", "label_en": "Biscuit Mix", "label_ur": "بسکٹ مکس", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k013", "label_en": "Mustard Oil", "label_ur": "سرسوں کا تیل", "unit": "ltr", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k014", "label_en": "Soya Sauce", "label_ur": "سویا سوس", "unit": "bottle", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k015", "label_en": "Vinegar", "label_ur": "سرکہ", "unit": "bottle", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k016", "label_en": "Chilli Sauce", "label_ur": "چیل سوس", "unit": "bottle", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k017", "label_en": "Ketchup", "label_ur": "کیچپ", "unit": "bottle", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k018", "label_en": "Mayonnaise", "label_ur": "مایونیز", "unit": "jar", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k019", "label_en": "Tang", "label_ur": "ٹینگ", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k020", "label_en": "Jam", "label_ur": "جام", "unit": "jar", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k021", "label_en": "Jam e Sheerin", "label_ur": "جام شیریں", "unit": "bottle", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "k022", "label_en": "Pickle", "label_ur": "اچار", "unit": "jar", "qty": null, "price_per_unit": null, "purchased": false }
+      ]
+    },
+    {
+      "id": "bakery",
+      "label_en": "Bakery",
+      "label_ur": "بیکری",
+      "items": [
+        { "id": "b001", "label_en": "Bread", "label_ur": "ڈبل روٹی", "unit": "loaf", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "b002", "label_en": "Bun", "label_ur": "بن", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "b003", "label_en": "Shawarma Bread", "label_ur": "شوارما روٹی", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "b004", "label_en": "Biscuits", "label_ur": "بسکٹ", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "b005", "label_en": "Coca Powder", "label_ur": "کوکا پاؤڈر", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "b006", "label_en": "Noodles", "label_ur": "نوڈلس", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "b007", "label_en": "Pasta / Macaroni", "label_ur": "پاستا / میکروٹی", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "b008", "label_en": "Spaghetti", "label_ur": "سپگین", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "b009", "label_en": "Pop Corn", "label_ur": "پاپکارن", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "b010", "label_en": "Rewari", "label_ur": "ریوڑی", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false }
+      ]
+    },
+    {
+      "id": "dals",
+      "label_en": "Pulses & Legumes",
+      "label_ur": "دالیں",
+      "items": [
+        { "id": "d001", "label_en": "Chana Dal", "label_ur": "چنا دال", "unit": "kg", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "d002", "label_en": "Moong Dal", "label_ur": "دال مونگ", "unit": "kg", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "d003", "label_en": "Masoor Dal", "label_ur": "دال مسور", "unit": "kg", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "d004", "label_en": "Mash Dal", "label_ur": "دال ماش", "unit": "kg", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "d005", "label_en": "White Chana", "label_ur": "چنا سفید", "unit": "kg", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "d006", "label_en": "Black Chana", "label_ur": "چنا بلیک", "unit": "kg", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "d007", "label_en": "Fried Chickpeas", "label_ur": "چنے بھنے ہوئے", "unit": "kg", "qty": null, "price_per_unit": null, "purchased": false }
+      ]
+    },
+    {
+      "id": "spices",
+      "label_en": "Spices",
+      "label_ur": "مصالحہ جات",
+      "items": [
+        { "id": "s001", "label_en": "Red Chilli Powder", "label_ur": "لال مرچ پاؤڈر", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "s002", "label_en": "Black Pepper", "label_ur": "کالی مرچ", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "s003", "label_en": "White Pepper", "label_ur": "سفید مرچ", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "s004", "label_en": "Salt", "label_ur": "نمک", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "s005", "label_en": "Chinese Salt", "label_ur": "چینی نمک", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "s006", "label_en": "Cumin", "label_ur": "زیرہ", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "s007", "label_en": "Cinnamon", "label_ur": "دارچینی", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "s008", "label_en": "Cloves", "label_ur": "لونگ", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "s009", "label_en": "Green Cardamom", "label_ur": "الائیچ سبز", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "s010", "label_en": "Large Cardamom", "label_ur": "بڑی الائیچ", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "s011", "label_en": "Fennel", "label_ur": "سونف", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "s012", "label_en": "Haleem Masala", "label_ur": "حلیم مصالحہ", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "s013", "label_en": "Qorma Masala", "label_ur": "قورمہ مصالحہ", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "s014", "label_en": "Karahi Masala", "label_ur": "کڑاہی مصالحہ", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "s015", "label_en": "Biryani Masala", "label_ur": "بریانی مصالحہ", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false }
+      ]
+    },
+    {
+      "id": "dry_fruits",
+      "label_en": "Dry Fruits",
+      "label_ur": "خشک میوہ جات",
+      "items": [
+        { "id": "df001", "label_en": "Coconut", "label_ur": "کھوپرا", "unit": "pcs", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "df002", "label_en": "Raisin", "label_ur": "کشمش", "unit": "g", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "df003", "label_en": "Almond", "label_ur": "بادام", "unit": "g", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "df004", "label_en": "Peanut", "label_ur": "مونگ پھیل", "unit": "g", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "df005", "label_en": "Walnut", "label_ur": "اخروٹ", "unit": "g", "qty": null, "price_per_unit": null, "purchased": false }
+      ]
+    },
+    {
+      "id": "cleaning",
+      "label_en": "Cleaning",
+      "label_ur": "صفائی",
+      "items": [
+        { "id": "cl001", "label_en": "Soaps", "label_ur": "صابن", "unit": "pcs", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "cl002", "label_en": "Shampoo", "label_ur": "شیمپو", "unit": "bottle", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "cl003", "label_en": "Dishwasher", "label_ur": "ڈش واشر", "unit": "bottle", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "cl004", "label_en": "Surf / Detergent", "label_ur": "سرف", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "cl005", "label_en": "Floor Cleaner", "label_ur": "فرش کلینر", "unit": "bottle", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "cl006", "label_en": "Sweep", "label_ur": "سویپ", "unit": "pcs", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "cl007", "label_en": "Tooth Paste", "label_ur": "دانتوں کا پیسٹ", "unit": "tube", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "cl008", "label_en": "Tissue Box", "label_ur": "ٹشو باکس", "unit": "pcs", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "cl009", "label_en": "Tissue Roll", "label_ur": "ٹشو رول", "unit": "pcs", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "cl010", "label_en": "Shoe Polish", "label_ur": "جوتا پولش", "unit": "pcs", "qty": null, "price_per_unit": null, "purchased": false }
+      ]
+    },
+    {
+      "id": "personal",
+      "label_en": "Personal",
+      "label_ur": "ذاتی",
+      "items": [
+        { "id": "p001", "label_en": "Ladies Pads", "label_ur": "نیپکن", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "p002", "label_en": "Hair Remover", "label_ur": "بالوں کو ہٹانے والا", "unit": "pack", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "p003", "label_en": "Face Wash", "label_ur": "فیس واش", "unit": "tube", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "p004", "label_en": "Lip Balm", "label_ur": "ہونٹ بام", "unit": "pcs", "qty": null, "price_per_unit": null, "purchased": false },
+        { "id": "p005", "label_en": "Lotion", "label_ur": "لوشن", "unit": "bottle", "qty": null, "price_per_unit": null, "purchased": false }
+      ]
+    },
+    {
+      "id": "medicines",
+      "label_en": "Medicines",
+      "label_ur": "ادویات",
+      "items": []
+    },
+    {
+      "id": "extras",
+      "label_en": "Extras",
+      "label_ur": "اضافی چیزیں",
+      "items": []
+    }
+  ]
+}
