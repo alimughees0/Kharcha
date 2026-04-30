@@ -23,6 +23,7 @@ const withId = (item: GrocerySeedItem): GroceryItem => ({
   ...item,
   id: `${item.englishName}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
   purchased: false,
+  selected: false,
 });
 
 const flattenSeedPayload = (payload: GrocerySeedPayload): GrocerySeedItem[] => {
@@ -92,7 +93,7 @@ export const useKharchaStore = create<AppState>()(
       },
       resetForNewMonth: () =>
         set((state) => ({
-          items: state.items.map((item) => ({ ...item, purchased: false })),
+          items: state.items.map((item) => ({ ...item, purchased: false, selected: false, quantity: null, unitPrice: null })),
         })),
     }),
     {

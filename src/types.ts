@@ -55,6 +55,7 @@ export type GrocerySeedPayload = {
 export type GroceryItem = GrocerySeedItem & {
   id: string;
   purchased: boolean;
+  selected: boolean;
 };
 
 export type MonthSnapshot = {

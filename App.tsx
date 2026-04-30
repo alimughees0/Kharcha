@@ -1,4 +1,6 @@
 import "react-native-gesture-handler";
+import * as SplashScreen from "expo-splash-screen";
+import * as Font from "expo-font";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import * as FileSystem from "expo-file-system/legacy";
@@ -7,7 +9,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { BarChart } from "react-native-chart-kit";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
 	Dimensions,
 	I18nManager,
@@ -133,11 +135,13 @@ function GroceryListScreen({ navigation }: { navigation: any }) {
 
 	return (
 		<SafeAreaView style={styles.screen} edges={["top"]}>
-			<ScrollView
-				horizontal
-				showsHorizontalScrollIndicator={false}
-				style={styles.categoryScroll}
-			>
+			<View style={{ height: 72 }}>
+				<ScrollView
+					horizontal
+					showsHorizontalScrollIndicator={false}
+					style={styles.categoryScroll}
+					contentContainerStyle={styles.categoryScrollContent}
+				>
 				{["All", ...CATEGORIES].map((category) => (
 					<Pressable
 						key={category}
@@ -195,8 +199,9 @@ function GroceryListScreen({ navigation }: { navigation: any }) {
 					</Pressable>
 				))}
 			</ScrollView>
+		</View>
 
-			<ScrollView contentContainerStyle={styles.listContent}>
+		<ScrollView contentContainerStyle={styles.listContent}>
 				{Object.entries(groupedItems).map(([category, categoryItems]) => (
 					<View key={category} style={styles.categorySection}>
 						<View style={styles.categoryHeaderRow}>
@@ -216,10 +221,15 @@ function GroceryListScreen({ navigation }: { navigation: any }) {
 								key={item.id}
 								style={[
 									styles.itemCard,
-									item.purchased && styles.itemCardPurchased,
+									item.selected && styles.itemCardSelected,
 								]}
 								onPress={() =>
 									navigation.navigate("ItemForm", { itemId: item.id })
+								}
+								onLongPress={() =>
+									updateItem(item.id, {
+										selected: !item.selected,
+									})
 								}
 							>
 								<View style={styles.itemTopRow}>
@@ -227,62 +237,22 @@ function GroceryListScreen({ navigation }: { navigation: any }) {
 										<Text style={styles.englishName}>{item.englishName}</Text>
 										<Text style={styles.urduName}>{item.urduName}</Text>
 									</View>
-									<Switch
-										value={item.quantity !== null && item.quantity > 0}
-										onValueChange={(value) =>
+									<Pressable
+										onPress={() =>
 											updateItem(item.id, {
-												quantity: value ? (item.quantity ?? 1) : null,
-												purchased: value ? item.purchased : false,
+												selected: !item.selected,
 											})
 										}
-									/>
-								</View>
-
-								<View style={styles.unitBadge}>
-									<Text style={styles.unitText}>
-										{formatUnitLabel(item.unit)}
-									</Text>
-								</View>
-
-								<View style={styles.inputRow}>
-									<View style={styles.inputGroup}>
-										<Text style={styles.inputLabel}>Qty</Text>
-										<TextInput
-											style={styles.input}
-											keyboardType="numeric"
-											value={
-												item.quantity === null ? "" : String(item.quantity)
+										style={styles.checkboxContainer}
+									>
+										<MaterialCommunityIcons
+											name={
+												item.selected ? "checkbox-marked" : "checkbox-blank-outline"
 											}
-											onChangeText={(value) =>
-												updateItem(item.id, {
-													quantity: parseNullableNumber(value),
-												})
-											}
-											placeholder={`Enter ${item.unit}`}
+											size={26}
+											color={item.selected ? COLORS.primary : COLORS.muted}
 										/>
-									</View>
-									<View style={styles.inputGroup}>
-										<Text style={styles.inputLabel}>Unit Price</Text>
-										<TextInput
-											style={styles.input}
-											keyboardType="numeric"
-											value={
-												item.unitPrice === null ? "" : String(item.unitPrice)
-											}
-											onChangeText={(value) =>
-												updateItem(item.id, {
-													unitPrice: parseNullableNumber(value),
-												})
-											}
-											placeholder="Enter price"
-										/>
-									</View>
-									<View style={styles.subtotalGroup}>
-										<Text style={styles.inputLabel}>Subtotal</Text>
-										<Text style={styles.subtotal}>
-											{money(itemSubtotal(item))}
-										</Text>
-									</View>
+									</Pressable>
 								</View>
 							</Pressable>
 						))}
@@ -381,7 +351,7 @@ function ShoppingScreen() {
 
 	const selectedItems = useMemo(() => {
 		return items
-			.filter((item) => item.quantity !== null && item.quantity > 0)
+			.filter((item) => item.selected)
 			.sort((a, b) => {
 				if (a.purchased === b.purchased) {
 					return (
@@ -409,41 +379,114 @@ function ShoppingScreen() {
 				{selectedItems.length === 0 ? (
 					<View style={styles.card}>
 						<Text style={styles.metaText}>
-							Add quantity in List tab to build your shopping checklist.
+							Select items in the List tab to build your shopping checklist.
 						</Text>
 					</View>
 				) : (
 					selectedItems.map((item) => (
 						<Pressable
 							key={item.id}
+							onPress={() =>
+								updateItem(item.id, { purchased: !item.purchased })
+							}
 							style={[
 								styles.shoppingItemCard,
 								item.purchased && styles.shoppingItemCardDone,
 							]}
-							onPress={() =>
-								updateItem(item.id, { purchased: !item.purchased })
-							}
 						>
-							<MaterialCommunityIcons
-								name={
-									item.purchased ? "checkbox-marked" : "checkbox-blank-outline"
-								}
-								size={24}
-								color={item.purchased ? COLORS.primary : COLORS.muted}
-							/>
+							<View style={styles.checkboxContainer}>
+								<MaterialCommunityIcons
+									name={
+										item.purchased ? "checkbox-marked" : "checkbox-blank-outline"
+									}
+									size={24}
+									color={item.purchased ? COLORS.primary : COLORS.muted}
+								/>
+							</View>
 							<View style={styles.shoppingItemContent}>
-								<Text
-									style={[
-										styles.shoppingItemName,
-										item.purchased && styles.shoppingItemNameDone,
-									]}
-								>
-									{item.englishName}
-								</Text>
-								<Text style={styles.urduName}>{item.urduName}</Text>
+								<View style={styles.itemTopRow}>
+									<View style={{ flex: 1 }}>
+										<Text
+											style={[
+												styles.shoppingItemName,
+												item.purchased && styles.shoppingItemNameDone,
+											]}
+										>
+											{item.englishName}
+										</Text>
+										<Text style={styles.urduName}>{item.urduName}</Text>
+									</View>
+								</View>
+
+								<Pressable style={styles.unitSelectionRow} onPress={() => {}}>
+									<ScrollView horizontal showsHorizontalScrollIndicator={false}>
+										{UNITS.map((unit) => (
+											<Pressable
+												key={unit}
+												style={[
+													styles.smallChip,
+													item.unit === unit && styles.smallChipActive,
+												]}
+												onPress={() =>
+													updateItem(item.id, { unit: unit as Unit })
+												}
+											>
+												<Text
+													style={[
+														styles.smallChipText,
+														item.unit === unit && styles.smallChipTextActive,
+													]}
+												>
+													{unit}
+												</Text>
+											</Pressable>
+										))}
+									</ScrollView>
+								</Pressable>
+								
+								<View style={styles.inputRow}>
+									<Pressable style={styles.inputGroup} onPress={() => {}}>
+										<Text style={styles.inputLabel}>Qty</Text>
+										<TextInput
+											style={styles.input}
+											keyboardType="numeric"
+											value={
+												item.quantity === null ? "" : String(item.quantity)
+											}
+											onChangeText={(value) =>
+												updateItem(item.id, {
+													quantity: parseNullableNumber(value),
+												})
+											}
+											placeholder={item.unit}
+										/>
+									</Pressable>
+									<Pressable style={styles.inputGroup} onPress={() => {}}>
+										<Text style={styles.inputLabel}>Price</Text>
+										<TextInput
+											style={styles.input}
+											keyboardType="numeric"
+											value={
+												item.unitPrice === null ? "" : String(item.unitPrice)
+											}
+											onChangeText={(value) =>
+												updateItem(item.id, {
+													unitPrice: parseNullableNumber(value),
+												})
+											}
+											placeholder="Price"
+										/>
+									</Pressable>
+									<View style={styles.subtotalGroup}>
+										<Text style={styles.inputLabel}>Subtotal</Text>
+										<Text style={styles.subtotal}>
+											{money(itemSubtotal(item))}
+										</Text>
+									</View>
+								</View>
+								
 								<Text style={styles.metaText}>
-									Qty: {item.quantity} {formatUnitLabel(item.unit)} |{" "}
-									{item.category}
+									Category: {item.category}
 								</Text>
 							</View>
 						</Pressable>
@@ -694,54 +737,6 @@ function ItemFormScreen({
 					))}
 				</ScrollView>
 
-				<Text style={styles.metaText}>Unit</Text>
-				<ScrollView horizontal showsHorizontalScrollIndicator={false}>
-					{UNITS.map((unit) => (
-						<Pressable
-							key={unit}
-							style={[styles.chip, form.unit === unit && styles.chipActive]}
-							onPress={() =>
-								setForm((prev) => ({ ...prev, unit: unit as Unit }))
-							}
-						>
-							<Text
-								style={[
-									styles.chipText,
-									form.unit === unit && styles.chipTextActive,
-								]}
-							>
-								{unit}
-							</Text>
-						</Pressable>
-					))}
-				</ScrollView>
-
-				<Text style={styles.fieldLabel}>Quantity</Text>
-				<TextInput
-					style={styles.input}
-					keyboardType="numeric"
-					placeholder="Quantity"
-					value={form.quantity === null ? "" : String(form.quantity)}
-					onChangeText={(value) =>
-						setForm((prev) => ({
-							...prev,
-							quantity: parseNullableNumber(value),
-						}))
-					}
-				/>
-				<Text style={styles.fieldLabel}>Price Per Unit</Text>
-				<TextInput
-					style={styles.input}
-					keyboardType="numeric"
-					placeholder="Price Per Unit"
-					value={form.unitPrice === null ? "" : String(form.unitPrice)}
-					onChangeText={(value) =>
-						setForm((prev) => ({
-							...prev,
-							unitPrice: parseNullableNumber(value),
-						}))
-					}
-				/>
 				<Pressable style={styles.primaryButton} onPress={save}>
 					<Text style={styles.primaryButtonText}>
 						{itemId ? "Update Item" : "Save Item"}
@@ -809,16 +804,50 @@ function Tabs() {
 		</Tab.Navigator>
 	);
 }
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
 	const initializeSeed = useKharchaStore((s) => s.initializeSeed);
+	const [appIsReady, setAppIsReady] = useState(false);
 
 	useEffect(() => {
-		initializeSeed();
+		async function prepare() {
+			try {
+				initializeSeed();
+				// Load fonts optionally to prevent crash if network is unstable
+				try {
+					await Font.loadAsync(Ionicons.font);
+					await Font.loadAsync(MaterialCommunityIcons.font);
+				} catch (fontError) {
+					console.warn("Font loading failed, proceeding without icons:", fontError);
+				}
+				// Ensure splash screen lasts for at least 4 seconds
+				await new Promise((resolve) => setTimeout(resolve, 4000));
+			} catch (e) {
+				console.warn("Initialization error:", e);
+			} finally {
+				setAppIsReady(true);
+			}
+		}
+
+		prepare().catch((err) => {
+			console.error("Critical preparation error:", err);
+			setAppIsReady(true); // Fallback to show app even on total failure
+		});
 	}, [initializeSeed]);
 
+	const onLayoutRootView = useCallback(async () => {
+		if (appIsReady) {
+			await SplashScreen.hideAsync();
+		}
+	}, [appIsReady]);
+
+	if (!appIsReady) {
+		return null;
+	}
+
 	return (
-		<SafeAreaProvider>
+		<SafeAreaProvider onLayout={onLayoutRootView}>
 			<StatusBar style="light" />
 			<NavigationContainer>
 				<Stack.Navigator>
@@ -848,27 +877,38 @@ const styles = StyleSheet.create({
 		gap: 12,
 	},
 	categoryScroll: {
-		maxHeight: 88,
+		backgroundColor: "#fff",
+		borderBottomWidth: 1,
+		borderBottomColor: COLORS.border,
+	},
+	categoryScrollContent: {
 		paddingHorizontal: 12,
-    marginBottom: 10,
+		paddingVertical: 12,
+		alignItems: "center",
+		gap: 8,
 	},
 	categoryChip: {
-		paddingHorizontal: 12,
-		paddingVertical: 8,
-		borderRadius: 16,
+		paddingHorizontal: 16,
+		paddingVertical: 10,
+		borderRadius: 20,
 		borderWidth: 1,
 		borderColor: COLORS.border,
 		backgroundColor: "#fff",
-		marginRight: 8,
-		minHeight: 36,
+		marginRight: 10,
+		minHeight: 44,
 		justifyContent: "space-between",
 		flexDirection: "row",
 		alignItems: "center",
-		gap: 10,
+		gap: 12,
 	},
 	categoryChipActive: {
 		backgroundColor: COLORS.primaryLight,
 		borderColor: COLORS.primary,
+		shadowColor: COLORS.primary,
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.1,
+		shadowRadius: 4,
+		elevation: 2,
 	},
 	categoryDot: {
 		width: 8,
@@ -954,8 +994,9 @@ const styles = StyleSheet.create({
 	},
 	categoryHeader: {
 		color: COLORS.text,
-		fontWeight: "700",
-		fontSize: 16,
+		fontWeight: "800",
+		fontSize: 18,
+		letterSpacing: -0.5,
 	},
 	categoryHeaderUrdu: {
 		color: COLORS.muted,
@@ -987,33 +1028,45 @@ const styles = StyleSheet.create({
 	},
 	itemCard: {
 		backgroundColor: COLORS.card,
-		borderRadius: 12,
+		borderRadius: 16,
 		borderWidth: 1,
 		borderColor: COLORS.border,
-		padding: 12,
-		gap: 8,
+		padding: 16,
+		marginBottom: 8,
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.05,
+		shadowRadius: 8,
+		elevation: 2,
 	},
-	itemCardPurchased: {
+	itemCardSelected: {
 		borderColor: COLORS.primary,
 		backgroundColor: COLORS.primaryLight,
 	},
 	shoppingItemCard: {
 		backgroundColor: COLORS.card,
-		borderRadius: 12,
+		borderRadius: 16,
 		borderWidth: 1,
 		borderColor: COLORS.border,
-		padding: 12,
-		gap: 10,
+		padding: 16,
 		flexDirection: "row",
 		alignItems: "flex-start",
+		marginBottom: 12,
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.05,
+		shadowRadius: 8,
+		elevation: 2,
 	},
 	shoppingItemCardDone: {
 		backgroundColor: COLORS.primaryLight,
 		borderColor: COLORS.primary,
+		opacity: 0.8,
 	},
 	shoppingItemContent: {
 		flex: 1,
-		gap: 4,
+		gap: 8,
+		marginLeft: 4,
 	},
 	shoppingItemName: {
 		color: COLORS.text,
@@ -1029,6 +1082,11 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "space-between",
 		gap: 10,
+	},
+	checkboxContainer: {
+		padding: 4,
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	englishName: {
 		color: COLORS.text,
@@ -1075,11 +1133,13 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		borderWidth: 1,
 		borderColor: COLORS.border,
-		borderRadius: 10,
+		borderRadius: 12,
 		paddingHorizontal: 12,
-		paddingVertical: 10,
+		paddingVertical: 12,
 		color: COLORS.text,
 		flex: 1,
+		fontSize: 14,
+		fontWeight: "600",
 	},
 	urduInput: {
 		writingDirection: "rtl",
@@ -1089,19 +1149,27 @@ const styles = StyleSheet.create({
 	subtotal: {
 		minWidth: 88,
 		textAlign: "right",
-		fontWeight: "700",
+		fontWeight: "800",
 		color: COLORS.primary,
+		fontSize: 15,
 	},
 	primaryButton: {
 		backgroundColor: COLORS.primary,
-		borderRadius: 12,
-		paddingVertical: 12,
+		borderRadius: 16,
+		paddingVertical: 14,
 		alignItems: "center",
 		margin: 16,
+		shadowColor: COLORS.primary,
+		shadowOffset: { width: 0, height: 4 },
+		shadowOpacity: 0.3,
+		shadowRadius: 10,
+		elevation: 6,
 	},
 	primaryButtonText: {
 		color: "#fff",
-		fontWeight: "700",
+		fontWeight: "800",
+		fontSize: 16,
+		letterSpacing: 0.5,
 	},
 	buttonInline: {
 		flexDirection: "row",
@@ -1192,5 +1260,38 @@ const styles = StyleSheet.create({
 		color: "#fff",
 		fontWeight: "700",
 		fontSize: 14,
+	},
+	unitSelectionRow: {
+		flexDirection: "row",
+		marginBottom: 4,
+	},
+	smallChip: {
+		paddingHorizontal: 10,
+		paddingVertical: 6,
+		borderRadius: 10,
+		borderWidth: 1,
+		borderColor: COLORS.border,
+		backgroundColor: "#fff",
+		marginRight: 8,
+		minWidth: 44,
+		alignItems: "center",
+	},
+	smallChipActive: {
+		backgroundColor: COLORS.primary,
+		borderColor: COLORS.primary,
+		shadowColor: COLORS.primary,
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.2,
+		shadowRadius: 4,
+		elevation: 3,
+	},
+	smallChipText: {
+		color: COLORS.muted,
+		fontSize: 12,
+		fontWeight: "700",
+		textTransform: "uppercase",
+	},
+	smallChipTextActive: {
+		color: "#fff",
 	},
 });

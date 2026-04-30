@@ -27,12 +27,14 @@ export const CATEGORY_URDU_LABELS: Record<Category, string> = {
 };
 
 export const COLORS = {
-  primary: "#2f855a",
-  primaryLight: "#e6f4ec",
-  background: "#f8fffb",
+  primary: "#059669", // Emerald 600
+  primaryLight: "#ecfdf5", // Emerald 50
+  primaryDark: "#065f46", // Emerald 800
+  background: "#f9fafb", // Slate 50
   card: "#ffffff",
-  text: "#1f2937",
-  muted: "#6b7280",
-  border: "#d1fae5",
-  danger: "#dc2626",
+  text: "#1e293b", // Slate 800
+  muted: "#64748b", // Slate 500
+  border: "#e2e8f0", // Slate 200
+  danger: "#ef4444", // Red 500
+  accent: "#10b981", // Emerald 500
 };
